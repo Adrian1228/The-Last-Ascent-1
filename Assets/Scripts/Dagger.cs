@@ -32,7 +32,7 @@ public class Dagger : MonoBehaviour
         if (other.GetComponent<Dagger>() != null) return;
  
         var health = other.GetComponentInParent<PlayerHealth>();
-        if (health != null) health.TakeDamage(damage);
+        if (health != null) health.TakeDamage(damage, transform.position);
  
         Destroy(gameObject); // Se destruye al pegar con el jugador o con una pared
     }

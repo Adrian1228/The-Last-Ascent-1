@@ -58,6 +58,6 @@ public class MummyMelee : MonoBehaviour
     void TryDamage(GameObject other)
     {
         var health = other.GetComponentInParent<PlayerHealth>();
-        if (health != null) health.TakeDamage(damage);
+        if (health != null) health.TakeDamage(damage, transform.position);
     }
 }
