@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public float invulnerabilityTime = 1f;
 
     [Header("Parpadeo al recibir daño")]
-    [Tooltip("Arrastra aquí el Renderer del jugador (la cápsula)")]
+    [Tooltip("Se llena solo con las mallas del personaje. Normalmente no hay que tocarlo.")]
     public Renderer[] renderersToBlink;
     public float blinkInterval = 0.1f;
 
@@ -37,6 +37,10 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHearts = maxHearts;
         controller = GetComponent<PlayerController>();
+
+        // Parpadea solo el personaje (así nunca reaparece la cápsula)
+        var skinned = GetComponentsInChildren<SkinnedMeshRenderer>();
+        if (skinned.Length > 0) renderersToBlink = skinned;
     }
 
     void Start()
@@ -70,7 +74,6 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        // Retroceso
         if (controller != null)
         {
             Vector3 dir = -transform.forward;
@@ -83,7 +86,6 @@ public class PlayerHealth : MonoBehaviour
             controller.ApplyKnockback(dir.normalized, knockbackForce, knockbackUpForce, knockbackDuration);
         }
 
-        // Temblor de cámara
         if (cameraOrbit != null) cameraOrbit.Shake(shakeDuration, shakeMagnitude);
 
         StartCoroutine(InvulnerabilityRoutine());
@@ -124,7 +126,6 @@ public class PlayerHealth : MonoBehaviour
     {
         OnDeath?.Invoke();
         Debug.Log("El jugador murió");
-        // Por ahora reinicia la escena. Cámbialo por tu pantalla de game over.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

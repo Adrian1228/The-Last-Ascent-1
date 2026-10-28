@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Opcional: el modelo/visual del jugador para achicarlo al agacharse")]
     public Transform visual;
 
+    [Header("Animación")]
+    [Tooltip("Si lo dejas vacío, lo busca solo en el personaje hijo")]
+    public Animator animator;
+
+    static readonly int SpeedHash = Animator.StringToHash("Speed");
+
     Rigidbody rb;
     CapsuleCollider col;
     Camera cam;
@@ -39,6 +45,8 @@ public class PlayerController : MonoBehaviour
         col = GetComponent<CapsuleCollider>();
         cam = Camera.main;
 
+        if (animator == null) animator = GetComponentInChildren<Animator>();
+
         rb.freezeRotation = true;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
@@ -55,6 +63,10 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         moveInput = new Vector3(h, 0f, v).normalized;
 
+        // Le dice al Animator qué tan rápido nos movemos (0 = quieto, 1 = caminando)
+        if (animator != null)
+            animator.SetFloat(SpeedHash, moveInput.magnitude, 0.1f, Time.deltaTime);
+
         if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && knockbackTimer <= 0f)
             jumpRequested = true;
 
@@ -65,7 +77,6 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Durante el retroceso no controlamos el movimiento
         if (knockbackTimer > 0f)
         {
             knockbackTimer -= Time.fixedDeltaTime;
