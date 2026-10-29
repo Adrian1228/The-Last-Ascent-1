@@ -24,7 +24,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Si lo dejas vacío, lo busca solo en el personaje hijo")]
     public Animator animator;
 
-    static readonly int SpeedHash = Animator.StringToHash("Speed");
+    // Nombres de los parámetros del Animator (deben ser EXACTOS)
+    static readonly int SpeedHash = Animator.StringToHash("Speed");          // Float
+    static readonly int IsJumpingHash = Animator.StringToHash("IsJumping");  // Bool
+    static readonly int HitHash = Animator.StringToHash("Hit");              // Trigger
 
     Rigidbody rb;
     CapsuleCollider col;
@@ -38,6 +41,9 @@ public class PlayerController : MonoBehaviour
     bool jumpRequested;
     bool isCrouching;
     float knockbackTimer;
+
+    bool isJumping;
+    float jumpStartTime;
 
     void Awake()
     {
@@ -63,12 +69,19 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         moveInput = new Vector3(h, 0f, v).normalized;
 
-        // Le dice al Animator qué tan rápido nos movemos (0 = quieto, 1 = caminando)
+        // Velocidad para el Animator (0 = quieto, 1 = caminando)
         if (animator != null)
             animator.SetFloat(SpeedHash, moveInput.magnitude, 0.1f, Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && IsGrounded() && !isCrouching && knockbackTimer <= 0f)
             jumpRequested = true;
+
+        // Terminar la animación de salto al aterrizar
+        if (isJumping && Time.time - jumpStartTime > 0.2f && IsGrounded())
+        {
+            isJumping = false;
+            if (animator != null) animator.SetBool(IsJumpingHash, false);
+        }
 
         bool wantsCrouch = Input.GetKey(crouchKey);
         if (wantsCrouch && !isCrouching) SetCrouch(true);
@@ -102,6 +115,11 @@ public class PlayerController : MonoBehaviour
         {
             vel.y = jumpForce;
             jumpRequested = false;
+
+            // Arranca la animación de salto
+            isJumping = true;
+            jumpStartTime = Time.time;
+            if (animator != null) animator.SetBool(IsJumpingHash, true);
         }
         rb.linearVelocity = vel; // En Unity 2022 o anterior usa: rb.velocity
 
@@ -110,6 +128,12 @@ public class PlayerController : MonoBehaviour
             Quaternion target = Quaternion.LookRotation(dir);
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, target, rotationSpeed * Time.fixedDeltaTime));
         }
+    }
+
+    // Lo llama PlayerHealth cuando te pegan (sirve igual para las dos momias)
+    public void PlayHit()
+    {
+        if (animator != null) animator.SetTrigger(HitHash);
     }
 
     // Lo llama PlayerHealth cuando te pegan

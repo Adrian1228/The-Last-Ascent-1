@@ -84,6 +84,7 @@ public class PlayerHealth : MonoBehaviour
                 if (dir.sqrMagnitude < 0.001f) dir = -transform.forward;
             }
             controller.ApplyKnockback(dir.normalized, knockbackForce, knockbackUpForce, knockbackDuration);
+            controller.PlayHit(); // Animación de golpe (igual para cualquier enemigo)
         }
 
         if (cameraOrbit != null) cameraOrbit.Shake(shakeDuration, shakeMagnitude);
