@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7f67d89f67d625d45ae4d29f0565e82c
+guid: 93fd28597c4f6f04fac8972e51f2c819
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Egyptian Nights
+  - ROCK-ON Shadowed Demo
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

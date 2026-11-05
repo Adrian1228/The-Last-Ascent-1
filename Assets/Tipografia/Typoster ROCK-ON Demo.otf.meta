@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 82c703c6add5e1d43a225e0ba5096532
+guid: c557cf1ccba7b91498f04359370c7bc0
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - EgyptAxt
+  - ROCK-ON Demo
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
