@@ -92,6 +92,16 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(InvulnerabilityRoutine());
     }
 
+    // Muerte instantánea (trampas de pinchos, vacío, etc.). Ignora la invulnerabilidad.
+    public void Kill()
+    {
+        if (CurrentHearts <= 0) return;
+
+        CurrentHearts = 0;
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+        Die();
+    }
+
     public void Heal(int amount = 1)
     {
         CurrentHearts = Mathf.Min(maxHearts, CurrentHearts + amount);

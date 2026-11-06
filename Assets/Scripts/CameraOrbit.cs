@@ -3,11 +3,13 @@ using UnityEngine;
 public class CameraOrbit : MonoBehaviour
 {
     [Header("Objetivo")]
+    [Tooltip("Si lo dejas vacío, busca solo al objeto con el tag Player")]
     public Transform target;
     public Vector3 targetOffset = new Vector3(0f, 1.5f, 0f);
 
     [Header("Posición")]
     public float distance = 7f;
+    public float minDistance = 3f;     // La cámara nunca se acerca más que esto
     public float startPitch = 30f;
 
     [Header("Mouse")]
@@ -18,6 +20,7 @@ public class CameraOrbit : MonoBehaviour
     public bool invertY = false;
 
     [Header("Colisión con paredes")]
+    public bool useCollision = true;
     public LayerMask collisionMask = ~0;
     public float collisionRadius = 0.3f;
 
@@ -32,7 +35,16 @@ public class CameraOrbit : MonoBehaviour
     void Start()
     {
         pitch = startPitch;
+        FindTarget();
         if (target != null) yaw = target.eulerAngles.y;
+    }
+
+    void FindTarget()
+    {
+        if (target != null) return;
+        GameObject p = GameObject.FindGameObjectWithTag("Player");
+        if (p != null) target = p.transform;
+        else Debug.LogWarning("CameraOrbit: no hay Target y ningún objeto tiene el tag Player.");
     }
 
     // Lo llama PlayerHealth al recibir daño
@@ -45,7 +57,11 @@ public class CameraOrbit : MonoBehaviour
 
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null)
+        {
+            FindTarget();
+            if (target == null) return;
+        }
 
         if (Time.timeScale > 0f && Cursor.lockState == CursorLockMode.Locked)
         {
@@ -58,14 +74,21 @@ public class CameraOrbit : MonoBehaviour
         Vector3 pivot = target.position + targetOffset;
         Vector3 desiredPos = pivot - rotation * Vector3.forward * distance;
 
-        Vector3 dir = desiredPos - pivot;
-        if (Physics.SphereCast(pivot, collisionRadius, dir.normalized, out RaycastHit hit, dir.magnitude, collisionMask, QueryTriggerInteraction.Ignore))
+        // Si hay algo sólido entre el jugador y la cámara, la acerca (pero no menos de minDistance)
+        if (useCollision)
         {
-            if (hit.collider.GetComponentInParent<PlayerHealth>() == null)
-                desiredPos = pivot + dir.normalized * Mathf.Max(0.5f, hit.distance);
+            Vector3 dir = desiredPos - pivot;
+            if (Physics.SphereCast(pivot, collisionRadius, dir.normalized, out RaycastHit hit, dir.magnitude, collisionMask, QueryTriggerInteraction.Ignore))
+            {
+                if (!hit.collider.transform.IsChildOf(target))
+                {
+                    float d = Mathf.Max(minDistance, hit.distance);
+                    desiredPos = pivot + dir.normalized * d;
+                }
+            }
         }
 
-        // Aplica el temblor (se va apagando)
+        // Temblor (se va apagando)
         if (shakeTimer > 0f)
         {
             shakeTimer -= Time.deltaTime;
