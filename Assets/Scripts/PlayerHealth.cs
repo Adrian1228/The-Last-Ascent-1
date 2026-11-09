@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [Header("Vida")]
+    [Header("Vida (escarabajos)")]
     public int maxHearts = 5;
+    [Tooltip("Con cuántos escarabajos empieza el jugador. 0 = un golpe y muere.")]
+    public int startingHearts = 0;
     public float invulnerabilityTime = 1f;
 
     [Header("Parpadeo al recibir daño")]
@@ -23,6 +25,10 @@ public class PlayerHealth : MonoBehaviour
     public float shakeDuration = 0.25f;
     public float shakeMagnitude = 0.2f;
 
+    [Header("Sonido")]
+    public AudioClip hitSound;
+    [Range(0f, 1f)] public float hitVolume = 1f;
+
     public int CurrentHearts { get; private set; }
     public bool IsInvulnerable { get; private set; }
 
@@ -32,10 +38,11 @@ public class PlayerHealth : MonoBehaviour
 
     PlayerController controller;
     CameraOrbit cameraOrbit;
+    bool isDead;
 
     void Awake()
     {
-        CurrentHearts = maxHearts;
+        CurrentHearts = Mathf.Clamp(startingHearts, 0, maxHearts);
         controller = GetComponent<PlayerController>();
 
         // Parpadea solo el personaje (así nunca reaparece la cápsula)
@@ -63,16 +70,19 @@ public class PlayerHealth : MonoBehaviour
 
     void ApplyDamage(int amount, Vector3? source)
     {
-        if (IsInvulnerable || CurrentHearts <= 0) return;
+        if (isDead || IsInvulnerable) return;
 
-        CurrentHearts = Mathf.Max(0, CurrentHearts - amount);
-        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+        PlayHitSound();
 
+        // Sin escarabajos: un golpe y mueres
         if (CurrentHearts <= 0)
         {
             Die();
             return;
         }
+
+        CurrentHearts = Mathf.Max(0, CurrentHearts - amount);
+        OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
 
         if (controller != null)
         {
@@ -95,7 +105,7 @@ public class PlayerHealth : MonoBehaviour
     // Muerte instantánea (trampas de pinchos, vacío, etc.). Ignora la invulnerabilidad.
     public void Kill()
     {
-        if (CurrentHearts <= 0) return;
+        if (isDead) return;
 
         CurrentHearts = 0;
         OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
@@ -104,8 +114,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void Heal(int amount = 1)
     {
+        if (isDead) return;
+
         CurrentHearts = Mathf.Min(maxHearts, CurrentHearts + amount);
         OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
+    }
+
+    void PlayHitSound()
+    {
+        if (hitSound != null && Camera.main != null)
+            AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, hitVolume);
     }
 
     IEnumerator InvulnerabilityRoutine()
@@ -135,6 +153,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
         OnDeath?.Invoke();
         Debug.Log("El jugador murió");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
