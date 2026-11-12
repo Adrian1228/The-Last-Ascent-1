@@ -29,6 +29,12 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip hitSound;
     [Range(0f, 1f)] public float hitVolume = 1f;
 
+    [Header("Muerte")]
+    [Tooltip("Segundos que se espera antes de reiniciar, para ver la animación de muerte.")]
+    public float deathRestartDelay = 3f;
+    [Tooltip("Nombre del Trigger de muerte en el Animator.")]
+    public string deathTrigger = "Die";
+
     public int CurrentHearts { get; private set; }
     public bool IsInvulnerable { get; private set; }
 
@@ -38,12 +44,21 @@ public class PlayerHealth : MonoBehaviour
 
     PlayerController controller;
     CameraOrbit cameraOrbit;
+    Animator animator;
+    Rigidbody rb;
+    CapsuleCollider capsule;
+    Coroutine invulnerabilityCoroutine;
     bool isDead;
 
     void Awake()
     {
         CurrentHearts = Mathf.Clamp(startingHearts, 0, maxHearts);
         controller = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
+
+        // El Animator está en el modelo (T-Pose), que es hijo del Player
+        animator = GetComponentInChildren<Animator>();
 
         // Parpadea solo el personaje (así nunca reaparece la cápsula)
         var skinned = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -99,7 +114,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (cameraOrbit != null) cameraOrbit.Shake(shakeDuration, shakeMagnitude);
 
-        StartCoroutine(InvulnerabilityRoutine());
+        invulnerabilityCoroutine = StartCoroutine(InvulnerabilityRoutine());
     }
 
     // Muerte instantánea (trampas de pinchos, vacío, etc.). Ignora la invulnerabilidad.
@@ -156,8 +171,44 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
         isDead = true;
 
+        // Corta el parpadeo y deja el modelo visible para ver la animación
+        if (invulnerabilityCoroutine != null) StopCoroutine(invulnerabilityCoroutine);
+        SetRenderersVisible(true);
+        IsInvulnerable = true;
+
+        // Bloquea el control y frena al personaje
+        if (controller != null) controller.enabled = false;
+        if (rb != null) rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+
+        // Achica la cápsula hacia abajo para que el cuerpo acostado quede en el piso
+        ShrinkColliderToFloor();
+
+        // Dispara la animación de muerte
+        if (animator != null)
+        {
+            animator.ResetTrigger("Hit");
+            animator.SetTrigger(deathTrigger);
+        }
+
         OnDeath?.Invoke();
         Debug.Log("El jugador murió");
+
+        StartCoroutine(RestartAfterDelay());
+    }
+
+    void ShrinkColliderToFloor()
+    {
+        if (capsule == null) return;
+
+        float bottom = capsule.center.y - capsule.height * 0.5f; // punto más bajo actual
+        capsule.height = capsule.radius * 2f;                    // altura mínima posible
+        capsule.center = new Vector3(capsule.center.x, bottom + capsule.radius, capsule.center.z);
+    }
+
+    IEnumerator RestartAfterDelay()
+    {
+        // Realtime: sigue contando aunque Time.timeScale sea 0
+        yield return new WaitForSecondsRealtime(deathRestartDelay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
