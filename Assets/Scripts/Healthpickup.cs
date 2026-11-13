@@ -14,6 +14,16 @@ public class HealthPickup : MonoBehaviour
     [Header("Girar")]
     public float rotateSpeed = 90f;   // Grados por segundo (0 = no gira)
 
+    [Header("Inspección (pantalla al recogerlo)")]
+    public bool showInspector = true;
+    [Tooltip("Modelo que se muestra al inspeccionar. Si lo dejas vacío usa este mismo objeto.")]
+    public GameObject inspectModel;
+    public string itemTitle = "Escarabajo dorado";
+    [TextArea(2, 4)]
+    public string itemDescription = "Un escarabajo sagrado de los antiguos. Restaura una vida.";
+    [Tooltip("Tamaño del objeto en la pantalla de inspección")]
+    public float inspectScale = 1f;
+
     Vector3 startPosition;
 
     void Start()
@@ -39,6 +49,15 @@ public class HealthPickup : MonoBehaviour
         if (onlyIfHurt && health.CurrentHearts >= health.maxHearts) return;
 
         health.Heal(healAmount);
+
+        // Abre la pantalla de inspección (pausa el juego y deja girar el objeto)
+        if (showInspector && ItemInspector.Instance != null)
+        {
+            GameObject model = inspectModel != null ? inspectModel : gameObject;
+            ItemInspector.Instance.Open(model, itemTitle, itemDescription, inspectScale);
+        }
+
+        // Open() copia el modelo al instante, así que ya se puede destruir el original
         Destroy(gameObject);
     }
 }
