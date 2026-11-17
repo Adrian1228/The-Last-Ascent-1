@@ -12,15 +12,22 @@ public class ItemInspector : MonoBehaviour
 
     [Header("UI")]
     public GameObject panel;
+    [Tooltip("Canvas con el velo oscuro (Screen Space - Camera). Se ve detrás del objeto.")]
+    public GameObject dimCanvas;
     public TMP_Text titleText;
     public TMP_Text descriptionText;
 
     [Header("Control")]
     public float rotateSpeed = 5f;      // sensibilidad del mouse
-    public float autoSpin = 25f;        // giro lento cuando no arrastras
+    public float autoSpin = 0f;         // 0 = solo gira cuando tú lo giras
     public KeyCode closeKey = KeyCode.E;
 
+    [Header("Sonido")]
+    public AudioClip openSound;
+    [Range(0f, 1f)] public float openVolume = 1f;
+
     GameObject current;
+    AudioSource audioSource;
     float prevTimeScale = 1f;
     CursorLockMode prevLock;
     bool prevCursorVisible;
@@ -31,7 +38,14 @@ public class ItemInspector : MonoBehaviour
         Instance = this;
         IsOpen = false;
         if (panel != null) panel.SetActive(false);
+        if (dimCanvas != null) dimCanvas.SetActive(false);
         if (inspectCamera != null) inspectCamera.enabled = false;
+
+        // AudioSource 2D propio: suena igual aunque el juego esté pausado
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 0f;
     }
 
     public void Open(GameObject modelPrefab, string title, string description, float scale = 1f)
@@ -55,8 +69,12 @@ public class ItemInspector : MonoBehaviour
 
         titleText.text = title;
         descriptionText.text = description;
+        if (dimCanvas != null) dimCanvas.SetActive(true);
         panel.SetActive(true);
         inspectCamera.enabled = true;
+
+        // Sonido al abrir la interfaz
+        if (openSound != null) audioSource.PlayOneShot(openSound, openVolume);
 
         // Pausa y cursor libre
         prevTimeScale = Time.timeScale;
@@ -78,7 +96,7 @@ public class ItemInspector : MonoBehaviour
             itemAnchor.Rotate(Vector3.up, -x, Space.World);
             itemAnchor.Rotate(Vector3.right, y, Space.World);
         }
-        else
+        else if (autoSpin != 0f)
         {
             itemAnchor.Rotate(Vector3.up, autoSpin * Time.unscaledDeltaTime, Space.World);
         }
@@ -95,6 +113,7 @@ public class ItemInspector : MonoBehaviour
 
         if (current != null) Destroy(current);
         panel.SetActive(false);
+        if (dimCanvas != null) dimCanvas.SetActive(false);
         inspectCamera.enabled = false;
 
         Time.timeScale = prevTimeScale;
