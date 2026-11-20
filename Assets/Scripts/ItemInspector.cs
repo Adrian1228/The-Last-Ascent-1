@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -28,6 +29,7 @@ public class ItemInspector : MonoBehaviour
 
     GameObject current;
     AudioSource audioSource;
+    Action onCloseCallback;
     float prevTimeScale = 1f;
     CursorLockMode prevLock;
     bool prevCursorVisible;
@@ -48,17 +50,29 @@ public class ItemInspector : MonoBehaviour
         audioSource.spatialBlend = 0f;
     }
 
-    public void Open(GameObject modelPrefab, string title, string description, float scale = 1f)
+    // eulerRotation: cómo se ve el objeto al abrirse (útil para espadas, que salen acostadas)
+    // onClose: se ejecuta cuando el jugador cierra la pantalla
+    public void Open(GameObject modelPrefab, string title, string description,
+                     float scale = 1f, Vector3 eulerRotation = default, Action onClose = null)
     {
         if (IsOpen || modelPrefab == null) return;
         IsOpen = true;
         openedAt = Time.unscaledTime;
+        onCloseCallback = onClose;
 
         // Copia del objeto en la mini escena
         current = Instantiate(modelPrefab, itemAnchor);
         current.transform.localPosition = Vector3.zero;
-        current.transform.localRotation = Quaternion.identity;
+        current.transform.localRotation = Quaternion.Euler(eulerRotation);
         current.transform.localScale = Vector3.one * scale;
+                // Centra el modelo en el ancla aunque su pivote esté lejos
+        var rends = current.GetComponentsInChildren<Renderer>();
+        if (rends.Length > 0)
+        {
+            Bounds b = rends[0].bounds;
+            foreach (var r in rends) b.Encapsulate(r.bounds);
+            current.transform.position += itemAnchor.position - b.center;
+        }
 
         // Sin colisiones ni scripts: es solo para mirar
         foreach (var c in current.GetComponentsInChildren<Collider>()) c.enabled = false;
@@ -119,5 +133,10 @@ public class ItemInspector : MonoBehaviour
         Time.timeScale = prevTimeScale;
         Cursor.lockState = prevLock;
         Cursor.visible = prevCursorVisible;
+
+        // Avisa que se cerró (por ejemplo, para equipar la espada)
+        var cb = onCloseCallback;
+        onCloseCallback = null;
+        cb?.Invoke();
     }
 }
