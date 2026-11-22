@@ -38,8 +38,10 @@ public class PlayerCombat : MonoBehaviour
     public string sheathTrigger = "Sheath";
     public string attackTrigger = "Attack";
     public string blockBool = "Block";
+    [Tooltip("Parámetro Float del Animator que usa el estado Ataque como Multiplier")]
+    public string attackSpeedParam = "AttackSpeed";
 
-    [Header("Tiempos en segundos")]
+    [Header("Tiempos en segundos (del clip a velocidad 1)")]
     [Tooltip("Segundo del clip en que la mano toma la espada")]
     public float drawAttachDelay = 0.4f;
     [Tooltip("Length del clip de sacar")]
@@ -54,6 +56,8 @@ public class PlayerCombat : MonoBehaviour
     public float attackDuration = 0.8f;
 
     [Header("Ataque")]
+    [Tooltip("Velocidad de la animación de ataque. 1 = normal, 2 = el doble de rápido")]
+    public float attackSpeed = 2f;
     public int attackDamage = 1;
     public float attackRange = 1.4f;        // qué tan adelante está la zona de golpe
     public float attackRadius = 1.0f;
@@ -180,7 +184,8 @@ public class PlayerCombat : MonoBehaviour
         lastFlip = flipGrip;
     }
 
-    // Calcula automáticamente cómo debe quedar la espada en la mano y guardada
+    // Calcula automáticamente cómo debe quedar la espada en la mano y guardada.
+    // Hazlo con el personaje quieto (en reposo) y con el juego corriendo.
     [ContextMenu("Recalcular posición de la espada")]
     public void RecalculateBase()
     {
@@ -222,6 +227,23 @@ public class PlayerCombat : MonoBehaviour
         }
 
         lastPlace = sheathPlace;
+    }
+
+    // Deja todos los ajustes finos en cero (clic derecho en el componente, con el juego detenido)
+    [ContextMenu("Resetear ajustes de la espada")]
+    void ResetSwordTuning()
+    {
+        handPosition = Vector3.zero;
+        handRotation = Vector3.zero;
+        handScale = 1f;
+        sheathPosition = Vector3.zero;
+        sheathRotation = Vector3.zero;
+        sheathScale = 1f;
+        flipGrip = false;
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
+        Debug.Log("PlayerCombat: ajustes de la espada reseteados a cero.");
     }
 
     void AttachSword(bool inHand)
@@ -305,10 +327,16 @@ public class PlayerCombat : MonoBehaviour
 
     // ---------- Animator seguro (avisa si un parámetro no existe) ----------
 
-    bool HasParam(string paramName)
+    bool ParamExists(string paramName)
     {
         foreach (var p in animator.parameters)
             if (p.name == paramName) return true;
+        return false;
+    }
+
+    bool HasParam(string paramName)
+    {
+        if (ParamExists(paramName)) return true;
         Debug.LogWarning($"PlayerCombat: el Animator no tiene el parámetro '{paramName}'. Revisa el nombre (debe ser exacto).");
         return false;
     }
@@ -353,10 +381,24 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         busy = true;
+
+        // Velocidad del ataque: el estado "Ataque" usa este parámetro como Multiplier
+        float speed = Mathf.Max(0.1f, attackSpeed);
+        if (ParamExists(attackSpeedParam))
+        {
+            animator.SetFloat(attackSpeedParam, speed);
+        }
+        else
+        {
+            speed = 1f;
+            if (debugLogs)
+                Debug.LogWarning($"PlayerCombat: no existe el parámetro Float '{attackSpeedParam}' en el Animator. El ataque va a velocidad normal.");
+        }
+
         SafeTrigger(attackTrigger);
-        yield return new WaitForSeconds(attackHitDelay);
+        yield return new WaitForSeconds(attackHitDelay / speed);
         DoHit();
-        yield return new WaitForSeconds(Mathf.Max(0f, attackDuration - attackHitDelay));
+        yield return new WaitForSeconds(Mathf.Max(0f, (attackDuration - attackHitDelay) / speed));
         busy = false;
     }
 
