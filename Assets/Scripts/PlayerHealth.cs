@@ -29,6 +29,13 @@ public class PlayerHealth : MonoBehaviour
     public AudioClip hitSound;
     [Range(0f, 1f)] public float hitVolume = 1f;
 
+    [Header("Defensa (espada)")]
+    [Tooltip("Ángulo máximo, desde el frente del personaje, en el que se bloquea un golpe")]
+    public float blockAngle = 100f;
+    [Tooltip("Si el golpe llega sin posición de origen, se bloquea igual cuando estás defendiendo")]
+    public bool blockHitsWithoutSource = true;
+    public bool debugBlock = true;
+
     [Header("Muerte")]
     [Tooltip("Segundos que se espera antes de reiniciar, para ver la animación de muerte.")]
     public float deathRestartDelay = 3f;
@@ -43,6 +50,7 @@ public class PlayerHealth : MonoBehaviour
     public event Action OnDeath;
 
     PlayerController controller;
+    PlayerCombat combat;
     CameraOrbit cameraOrbit;
     Animator animator;
     Rigidbody rb;
@@ -54,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
     {
         CurrentHearts = Mathf.Clamp(startingHearts, 0, maxHearts);
         controller = GetComponent<PlayerController>();
+        combat = GetComponent<PlayerCombat>();
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
 
@@ -83,16 +92,53 @@ public class PlayerHealth : MonoBehaviour
         ApplyDamage(amount, sourcePosition);
     }
 
+    // Devuelve true si la defensa con la espada anula el golpe
+    bool TryBlock(Vector3? source)
+    {
+        // PlayerCombat se puede agregar en pleno juego (al recoger la espada)
+        if (combat == null) combat = GetComponent<PlayerCombat>();
+        bool blocking = combat != null && combat.IsBlocking;
+
+        if (debugBlock)
+            Debug.Log($"PlayerHealth: golpe recibido. defendiendo={blocking}, origen={(source.HasValue ? "sí" : "ninguno")}");
+
+        if (!blocking) return false;
+
+        if (source.HasValue)
+        {
+            Transform facing = animator != null ? animator.transform : transform;
+            Vector3 toSource = source.Value - transform.position;
+            toSource.y = 0f;
+            float angle = Vector3.Angle(facing.forward, toSource);
+
+            if (debugBlock)
+                Debug.Log($"PlayerHealth: ángulo del golpe = {angle:F0}° (bloquea si es menor de {blockAngle:F0}°)");
+
+            if (angle > blockAngle) return false;
+        }
+        else if (!blockHitsWithoutSource)
+        {
+            return false;
+        }
+
+        if (cameraOrbit != null) cameraOrbit.Shake(0.1f, 0.05f);
+        if (debugBlock) Debug.Log("PlayerHealth: ¡golpe bloqueado!");
+        return true;
+    }
+
     void ApplyDamage(int amount, Vector3? source)
     {
         if (isDead || IsInvulnerable) return;
+
+        // Defensa con la espada: anula el golpe
+        if (TryBlock(source)) return;
 
         PlayHitSound();
 
         // Sin escarabajos: un golpe y mueres
         if (CurrentHearts <= 0)
         {
-            Die();
+            Die(source);
             return;
         }
 
@@ -117,14 +163,16 @@ public class PlayerHealth : MonoBehaviour
         invulnerabilityCoroutine = StartCoroutine(InvulnerabilityRoutine());
     }
 
-    // Muerte instantánea (trampas de pinchos, vacío, etc.). Ignora la invulnerabilidad.
+    // Muerte instantánea (trampas de pinchos, vacío, etc.). Ignora la invulnerabilidad y la defensa.
     public void Kill()
     {
         if (isDead) return;
 
+        if (debugBlock) Debug.Log("PlayerHealth: Kill() llamado (muerte instantánea, no se puede bloquear)");
+
         CurrentHearts = 0;
         OnHealthChanged?.Invoke(CurrentHearts, maxHearts);
-        Die();
+        Die(null);
     }
 
     public void Heal(int amount = 1)
@@ -166,7 +214,7 @@ public class PlayerHealth : MonoBehaviour
             if (r != null) r.enabled = visible;
     }
 
-    void Die()
+    void Die(Vector3? source)
     {
         if (isDead) return;
         isDead = true;
@@ -179,6 +227,15 @@ public class PlayerHealth : MonoBehaviour
         // Bloquea el control y frena al personaje
         if (controller != null) controller.enabled = false;
         if (rb != null) rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+
+        // Gira el modelo hacia el enemigo: así la caída "hacia atrás" lo aleja de él
+        if (source.HasValue && animator != null)
+        {
+            Vector3 toSource = source.Value - transform.position;
+            toSource.y = 0f;
+            if (toSource.sqrMagnitude > 0.001f)
+                animator.transform.rotation = Quaternion.LookRotation(toSource.normalized, Vector3.up);
+        }
 
         // Achica la cápsula hacia abajo para que el cuerpo acostado quede en el piso
         ShrinkColliderToFloor();

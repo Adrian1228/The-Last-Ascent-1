@@ -1,0 +1,592 @@
+fileFormatVersion: 2
+guid: 34e96ef73ade28749b03730cfad22bf5
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: correccion de personaje prin(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: imagePlane1
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0, y: 0.4952496, z: -1.9530506}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 3.820804, y: 3.820804, z: 3.820804}
+    - name: imagePlane2
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 1.6633658, y: 0.5025474, z: 0.014847568}
+      rotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+      scale: {x: 3.6947067, y: 3.6947067, z: 3.6947067}
+    - name: molde_personaje:group
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.020550046, y: 0.635858, z: 0.043597095}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:persp1
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.066629425, y: 0.60795975, z: 1.2616285}
+      rotation: {x: 0.0031880662, y: -0.9937714, z: 0.10741721, w: 0.029494464}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pSphere3
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00005921872, y: 0.346418, z: -0.0029729526}
+      rotation: {x: 0.15429577, y: -0, z: -0, w: 0.9880247}
+      scale: {x: 2.918472, y: 3.6994717, z: 3.6994717}
+    - name: molde_personaje:mo:transform2
+      parentName: molde_personaje:pSphere3
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface6
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0008622121, y: 0.09292172, z: 0.013174964}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform5
+      parentName: molde_personaje:polySurface6
+      position: {x: -0.0008622121, y: -0.09292172, z: -0.013174964}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface3
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0049005635, y: 0.09244602, z: 0.013250818}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1.1388329, y: 1.1388329, z: 1.1388329}
+    - name: molde_personaje:polySurface8
+      parentName: molde_personaje:polySurface3
+      position: {x: -0.0076786536, y: -0.09244602, z: -0.038785324}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface9
+      parentName: molde_personaje:polySurface3
+      position: {x: -0.0076786536, y: -0.09244602, z: -0.038785324}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface10
+      parentName: molde_personaje:polySurface3
+      position: {x: 0.0007741749, y: -0.09244602, z: -0.038785324}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface11
+      parentName: molde_personaje:polySurface3
+      position: {x: 0.0007741749, y: -0.09244602, z: -0.038785324}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform7
+      parentName: molde_personaje:polySurface3
+      position: {x: -0.0076786536, y: -0.09244602, z: -0.013250818}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface20
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 100}
+    - name: molde_personaje:mo:polySurface1
+      parentName: molde_personaje:polySurface20
+      position: {x: 0.000030065492, y: 0.00013593903, z: 0.001739545}
+      rotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+      scale: {x: 0.19272926, y: 0.19272926, z: 0.19272926}
+    - name: molde_personaje:mo:transform3
+      parentName: molde_personaje:mo:polySurface1
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:mo:transform1
+      parentName: molde_personaje:polySurface20
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface19
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0030065724, y: 0.27624443, z: -0.0030108579}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface12
+      parentName: molde_personaje:polySurface19
+      position: {x: 3.8639167e-10, y: -0.062029336, z: -0.010599911}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1.110498, y: 1.110498, z: 1.110498}
+    - name: molde_personaje:transform10
+      parentName: molde_personaje:polySurface12
+      position: {x: -0.0030065726, y: -0.22841209, z: 0.008775655}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface13
+      parentName: molde_personaje:polySurface19
+      position: {x: -0.0028878541, y: 0.057249207, z: 0.0010025338}
+      rotation: {x: -0.9816316, y: -0, z: -0.039199546, w: 0.18671596}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform9
+      parentName: molde_personaje:polySurface13
+      position: {x: -0.00011871815, y: -0.34262568, z: 0.0029729318}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform8
+      parentName: molde_personaje:polySurface19
+      position: {x: -0.0030065724, y: -0.27624443, z: 0.0030108579}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface12
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform12
+      parentName: molde_personaje:polySurface12
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder2
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.07612408, y: 0.20066391, z: -0.019401427}
+      rotation: {x: 0, y: 0, z: 0.19297674, w: 0.9812033}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform11
+      parentName: molde_personaje:pCylinder2
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface14
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.020715918, y: 0.259102, z: -0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform14
+      parentName: molde_personaje:polySurface14
+      position: {x: -0.020715918, y: -0.259102, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder3
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.07423765, y: 0.20125315, z: -0.018231208}
+      rotation: {x: 0, y: -0, z: -0.21549757, w: 0.9765044}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform13
+      parentName: molde_personaje:pCylinder3
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface15
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.000047250753, y: 0.259102, z: -0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform15
+      parentName: molde_personaje:polySurface15
+      position: {x: -0.000047250753, y: -0.259102, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder4
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.035202205, y: 0.08213848, z: -0.015357392}
+      rotation: {x: 0, y: 0, z: 0.071057156, w: 0.9974723}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform16
+      parentName: molde_personaje:pCylinder4
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder5
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00201612, y: 0.19302773, z: -0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface16
+      parentName: molde_personaje:pCylinder5
+      position: {x: 0.025427269, y: -0.10148071, z: -0.010439581}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform18
+      parentName: molde_personaje:polySurface16
+      position: {x: -0.030798875, y: -0.09475817, z: 0.015634736}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface17
+      parentName: molde_personaje:pCylinder5
+      position: {x: -0.00201612, y: -0.19302773, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform19
+      parentName: molde_personaje:polySurface17
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform17
+      parentName: molde_personaje:pCylinder5
+      position: {x: -0.00201612, y: -0.19302773, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface17
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00201612, y: 0.19208412, z: -0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform20
+      parentName: molde_personaje:polySurface17
+      position: {x: -0.00201612, y: -0.19208412, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder6
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.034646578, y: 0.06644057, z: -0.019077815}
+      rotation: {x: 0, y: -0, z: -0.0614226, w: 0.99811184}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform21
+      parentName: molde_personaje:pCylinder6
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:pCylinder7
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00201612, y: 0.19208412, z: -0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface18
+      parentName: molde_personaje:pCylinder7
+      position: {x: -0.03049962, y: -0.0965395, z: -0.008733038}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform24
+      parentName: molde_personaje:polySurface18
+      position: {x: 0.0284835, y: -0.09554462, z: 0.019077815}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface19
+      parentName: molde_personaje:pCylinder7
+      position: {x: -0.00201612, y: -0.19208412, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform23
+      parentName: molde_personaje:polySurface19
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform22
+      parentName: molde_personaje:pCylinder7
+      position: {x: -0.00201612, y: -0.19208412, z: 0.005195154}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface18
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.008410711, y: 0.33423546, z: 0.025622291}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1.0017159, y: 1.0017159, z: 1.0017159}
+    - name: molde_personaje:momia_personaje:transform1
+      parentName: molde_personaje:polySurface18
+      position: {x: 0.008410711, y: -0.33423546, z: -0.025622291}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:group
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.020550046, y: 0.635858, z: 0.043597095}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pasted__pSphere1
+      parentName: molde_personaje:momia_personaje:group
+      position: {x: 0.0102268765, y: -0.30073145, z: -0.021674499}
+      rotation: {x: -0.0021258828, y: -0.17252658, z: -0.0106994165, w: 0.98494446}
+      scale: {x: 0.5944966, y: 0.6333231, z: 0.5944966}
+    - name: molde_personaje:momia_personaje:transform2
+      parentName: molde_personaje:momia_personaje:pasted__pSphere1
+      position: {x: 0.02178563, y: -0.6346224, z: -0.043598022}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pasted__pSphere2
+      parentName: molde_personaje:momia_personaje:group
+      position: {x: 0.028702574, y: -0.30106664, z: -0.018793557}
+      rotation: {x: 0, y: 0.016377008, z: -0, w: 0.9998659}
+      scale: {x: -0.59205616, y: 0.59205616, z: 0.59205616}
+    - name: molde_personaje:momia_personaje:transform3
+      parentName: molde_personaje:momia_personaje:pasted__pSphere2
+      position: {x: 0.020550048, y: -0.635858, z: -0.043597095}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube8
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.038481083, y: -0.0021924002, z: -0.015309275}
+      rotation: {x: 0, y: -0.024787666, z: -0, w: 0.99969274}
+      scale: {x: 6.36844, y: 3.2600276, z: 3.2380846}
+    - name: molde_personaje:momia_personaje:transform7
+      parentName: molde_personaje:momia_personaje:pCube8
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube9
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.046507005, y: -0.006133815, z: -0.010867407}
+      rotation: {x: 0, y: -0.024787666, z: -0, w: 0.99969274}
+      scale: {x: 6.36844, y: 3.2600276, z: 3.2380846}
+    - name: molde_personaje:momia_personaje:transform9
+      parentName: molde_personaje:momia_personaje:pCube9
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube10
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0.08851539, y: 0.14944768, z: -0.015773196}
+      rotation: {x: -0.5288958, y: -0.43305913, z: 0.5560447, w: 0.47280365}
+      scale: {x: 0.6804052, y: 0.6804052, z: 0.6804052}
+    - name: molde_personaje:transform28
+      parentName: molde_personaje:momia_personaje:pCube10
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube11
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.09219266, y: 0.14138268, z: -0.014582502}
+      rotation: {x: 0.4940639, y: 0.5570126, z: 0.41165838, w: 0.52552366}
+      scale: {x: 0.6145513, y: 0.6145513, z: 0.6145513}
+    - name: molde_personaje:momia_personaje:transform5
+      parentName: molde_personaje:momia_personaje:pCube11
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pasted__pSphere2
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0020339969, y: 0.1918402, z: -0.005102228}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:transform4
+      parentName: molde_personaje:momia_personaje:pasted__pSphere2
+      position: {x: -0.0020339969, y: -0.1918402, z: 0.005102228}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube12
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.009786495, y: 0.19184023, z: -0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface21
+      parentName: molde_personaje:momia_personaje:pCube12
+      position: {x: -0.009786495, y: -0.19184023, z: 0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform27
+      parentName: molde_personaje:polySurface21
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface22
+      parentName: molde_personaje:momia_personaje:pCube12
+      position: {x: -0.009786495, y: -0.19184023, z: 0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform26
+      parentName: molde_personaje:polySurface22
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform25
+      parentName: molde_personaje:momia_personaje:pCube12
+      position: {x: -0.009786495, y: -0.19184023, z: 0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface21
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.009428954, y: 0.19184023, z: -0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:transform29
+      parentName: molde_personaje:polySurface21
+      position: {x: -0.009428954, y: -0.19184023, z: 0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:polySurface23
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00045780544, y: 0.19184023, z: -0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:transform6
+      parentName: molde_personaje:polySurface23
+      position: {x: -0.00045780544, y: -0.19184023, z: 0.0051022265}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube13
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0006477165, y: 0.16599452, z: 0.0075844983}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:transform8
+      parentName: molde_personaje:momia_personaje:pCube13
+      position: {x: -0.0006477165, y: -0.16669396, z: -0.0075844983}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: molde_personaje:momia_personaje:pCube14
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0006477165, y: 0.50383234, z: 0.04266203}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1.4202331, y: 1.4202331, z: 1.4202331}
+    - name: polySurface1
+      parentName: molde_personaje:momia_personaje:pCube14
+      position: {x: -0.0006477165, y: -0.16437355, z: -0.010350811}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: transform2
+      parentName: polySurface1
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: transform1
+      parentName: molde_personaje:momia_personaje:pCube14
+      position: {x: -0.0006477165, y: -0.16437355, z: -0.010350811}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pCube1
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -0, y: 0.49099678, z: 0.005976199}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 13.76054, y: 12.509582, z: 10.424652}
+    - name: transform3
+      parentName: pCube1
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: pCube2
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.0006477165, y: 0.48679832, z: 0.014295085}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: polySurface4
+      parentName: pCube2
+      position: {x: -0.0006477165, y: -0.48679832, z: -0.014295085}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: transform5
+      parentName: polySurface4
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: polySurface5
+      parentName: pCube2
+      position: {x: -0.0006477165, y: -0.48679832, z: -0.014295085}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: transform6
+      parentName: polySurface5
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: transform4
+      parentName: pCube2
+      position: {x: -0.0006477165, y: -0.48679832, z: -0.014295085}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Camera
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -7.3588915, y: 4.958309, z: 6.925791}
+      rotation: {x: 0.09062847, y: 0.89379627, z: -0.20997298, w: 0.3857799}
+      scale: {x: 100, y: 100.00001, z: 99.99999}
+    - name: Light
+      parentName: correccion de personaje prin(Clone)
+      position: {x: -4.0762453, y: 5.903862, z: -1.005454}
+      rotation: {x: 0.52327543, y: -0.34203392, z: 0.72694236, w: 0.28416622}
+      scale: {x: 100.00001, y: 100, z: 100}
+    - name: polySurface3
+      parentName: correccion de personaje prin(Clone)
+      position: {x: 0.00689878, y: 0.5023876, z: -0.0058758045}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
