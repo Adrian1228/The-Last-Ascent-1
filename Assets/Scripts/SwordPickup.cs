@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class SwordPickup : MonoBehaviour
@@ -9,6 +10,11 @@ public class SwordPickup : MonoBehaviour
     [Header("Girar")]
     public float rotateSpeed = 60f;   // 0 = no gira
 
+    [Header("Sonido")]
+    public AudioClip pickupSound;
+    [Range(0f, 1f)]
+    public float pickupVolume = 1f;
+
     [Header("Inspección")]
     [Tooltip("Modelo que se muestra. Si lo dejas vacío usa este mismo objeto.")]
     public GameObject inspectModel;
@@ -19,30 +25,34 @@ public class SwordPickup : MonoBehaviour
     [Tooltip("Rotación con la que se ve en la pantalla. Si sale acostada, prueba (0,0,90) o (90,0,0).")]
     public Vector3 inspectRotation = Vector3.zero;
 
-    Vector3 localCenter;     // centro visual del modelo, en coordenadas locales
+    Vector3 localCenter;
     float lastOffset;
     bool taken;
 
     void Start()
     {
-        // Centro visual del modelo (no depende de dónde esté el pivote)
+        // Centro visual del modelo
         var rends = GetComponentsInChildren<Renderer>();
+
         if (rends.Length > 0)
         {
             Bounds b = rends[0].bounds;
-            foreach (var r in rends) b.Encapsulate(r.bounds);
+
+            foreach (var r in rends)
+                b.Encapsulate(r.bounds);
+
             localCenter = transform.InverseTransformPoint(b.center);
         }
     }
 
     void Update()
     {
-        // Flota: aplica solo el cambio de altura de este frame
+        // Flota
         float offset = Mathf.Sin(Time.time * bobSpeed) * bobHeight;
         transform.position += Vector3.up * (offset - lastOffset);
         lastOffset = offset;
 
-        // Gira sobre su propio centro, sin moverse de sitio
+        // Gira sobre su propio centro
         Vector3 worldCenter = transform.TransformPoint(localCenter);
         transform.RotateAround(worldCenter, Vector3.up, rotateSpeed * Time.deltaTime);
     }
@@ -53,18 +63,37 @@ public class SwordPickup : MonoBehaviour
 
         PlayerHealth health = other.GetComponentInParent<PlayerHealth>();
         if (health == null) return;
+
         taken = true;
+
+        // Sonido al recoger la espada
+        if (pickupSound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                pickupSound,
+                transform.position,
+                pickupVolume
+            );
+        }
 
         // Busca (o crea) PlayerCombat en el Player
         PlayerCombat combat = health.GetComponent<PlayerCombat>();
-        if (combat == null) combat = health.gameObject.AddComponent<PlayerCombat>();
+
+        if (combat == null)
+            combat = health.gameObject.AddComponent<PlayerCombat>();
 
         if (ItemInspector.Instance != null)
         {
             GameObject model = inspectModel != null ? inspectModel : gameObject;
-            ItemInspector.Instance.Open(model, itemTitle, itemDescription,
-                                        inspectScale, inspectRotation,
-                                        () => combat.GiveSword());   // al cerrar, recibe la espada
+
+            ItemInspector.Instance.Open(
+                model,
+                itemTitle,
+                itemDescription,
+                inspectScale,
+                inspectRotation,
+                () => combat.GiveSword()
+            );
         }
         else
         {

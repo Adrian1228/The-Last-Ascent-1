@@ -55,6 +55,11 @@ public class PlayerCombat : MonoBehaviour
     [Tooltip("Length del clip de ataque")]
     public float attackDuration = 0.8f;
 
+    [Header("Sonido del golpe")]
+    public AudioClip swordHitSound;
+    [Range(0f, 1f)]
+    public float swordHitVolume = 1f;
+
     [Header("Ataque")]
     [Tooltip("Velocidad de la animación de ataque. 1 = normal, 2 = el doble de rápido")]
     public float attackSpeed = 2f;
@@ -184,22 +189,20 @@ public class PlayerCombat : MonoBehaviour
         lastFlip = flipGrip;
     }
 
-    // Calcula automáticamente cómo debe quedar la espada en la mano y guardada.
-    // Hazlo con el personaje quieto (en reposo) y con el juego corriendo.
+    // La mano usa exclusivamente handPosition y handRotation del Inspector.
+    // El ajuste automatico se conserva solamente para la posicion de la funda.
     [ContextMenu("Recalcular posición de la espada")]
     public void RecalculateBase()
     {
         if (animator == null || !animator.isHuman || holder == null) return;
         root = animator.transform;
 
-        // --- Mano: el mango en la palma, la hoja hacia adelante ---
-        Vector3 palm = handBone.position;
-        Transform mid = animator.GetBoneTransform(HumanBodyBones.RightMiddleProximal);
-        if (mid != null) palm = Vector3.Lerp(handBone.position, mid.position, 0.6f);
-
-        handBasePos = handBone.InverseTransformPoint(palm);
-        Vector3 handDir = (root.forward * 0.9f + Vector3.up * 0.25f).normalized;
-        handBaseRot = Quaternion.Inverse(handBone.rotation) * Quaternion.FromToRotation(bladeDir, handDir);
+        // --- Mano: SIN ajuste automatico ---
+        // La espada queda exactamente donde indiquen handPosition y handRotation
+        // en el Inspector. La conversion solo permite expresar la posicion
+        // usando los ejes del personaje.
+        handBasePos = Vector3.zero;
+        handBaseRot = Quaternion.identity;
         handRootToBone = Quaternion.Inverse(handBone.rotation) * root.rotation;
 
         // --- Guardada: colgando de la cadera izquierda o cruzada en la espalda ---
@@ -417,6 +420,16 @@ public class PlayerCombat : MonoBehaviour
 
     void DoHit()
     {
+        // Sonido en el momento exacto en que conecta el golpe de la animación
+        if (swordHitSound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                swordHitSound,
+                transform.position,
+                swordHitVolume
+            );
+        }
+
         var hits = Physics.OverlapSphere(HitCenter(), attackRadius, hitMask, QueryTriggerInteraction.Ignore);
         var done = new HashSet<MummyHealth>();
         foreach (var h in hits)
