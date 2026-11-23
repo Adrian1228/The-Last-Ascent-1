@@ -14,6 +14,8 @@ public class GameHUD : MonoBehaviour
 
     [Header("Tiempo")]
     public bool timerRunning = true;
+    [Tooltip("Si ya tocaste un checkpoint, el tiempo NO se reinicia al morir")]
+    public bool keepTimeAfterCheckpoint = true;
 
     public float ElapsedTime { get; private set; }
     public float CurrentHeight { get; private set; }
@@ -23,8 +25,10 @@ public class GameHUD : MonoBehaviour
 
     void Start()
     {
-        if (player != null) startY = player.position.y;
-        ElapsedTime = 0f;
+        if (player != null)
+            startY = CheckpointManager.HasStartY ? CheckpointManager.StartY : player.position.y;
+
+        ElapsedTime = (keepTimeAfterCheckpoint && CheckpointManager.HasCheckpoint) ? CheckpointManager.SavedTime : 0f;
         MaxHeight = 0f;
         UpdateTexts();
     }
@@ -33,6 +37,7 @@ public class GameHUD : MonoBehaviour
     {
         // En pausa Time.timeScale = 0, entonces deltaTime es 0 y el tiempo se detiene solo
         if (timerRunning) ElapsedTime += Time.deltaTime;
+        CheckpointManager.SavedTime = ElapsedTime;
 
         if (player != null)
         {
